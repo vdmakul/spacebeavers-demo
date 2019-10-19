@@ -91,7 +91,7 @@
 		</div>
 		<div style="font-size:14px;">
 			<a href="#" style="text-decoration:none; color: white">
-				<p class="attention-label" onclick="zoom_map(58.29032 26.645223)">Attention 1 </p>
+				<p class="attention-label" onclick="zoom_map(58.330269, 26.251059)">Attention 1 </p>
 				<hr style="opacity: 0.4;">
 				<p class="attention-label"></p>
 				<hr style="opacity: 0.4;">
@@ -108,7 +108,7 @@
 
 	<div id="widget">
 		<img src="/images/main/satellite_white.png" style="width: 200px; left: 25px; position: relative;" onclick="map.setView([58.744355, 25.628880], 7);" />
-		<img src="/images/main/sat_logo.png"  onclick="map.setView([58.29032, 26.645223], 7);" />
+		<img src="/images/main/sat_logo.png"  onclick="map.setView([58.744355, 25.628880], 7);" />
 
 		<p style="
 					color: #ddd;
@@ -326,14 +326,6 @@
 			}).addTo(map);
 		});
 
-		var custom_popup_04 = L.popup({ maxWidth: 800 }).setContent('<iframe style="width: 800px; height: 400px;border:none;" src="popup_04.html"></iframe>');
-		$.getJSON("/json/the_bog.json", function (data) {
-			L.geoJSON(data, {
-				color: 'yellow'
-			}).addTo(map).bindPopup(custom_popup_04);
-		});
-
-
 		var content1 = '<iframe style="width: 900px; height: 600px;border:none;" src="popup_01.html"></iframe>';
 		var custom_popup_01 = L.popup({ maxWidth: 900 }).setContent(content1);
 		$.getJSON("json/wgs_not_cut_peat.json", function (data) {
@@ -370,28 +362,9 @@
 			iconAnchor: [16, 16], // point of the icon which will correspond to marker's location
 
 		});
-
-		var myIcon2 = L.icon({
-			iconUrl: '/images/main/the-mark.png',
-			iconSize: [32, 32],
-			iconAnchor: [16, 16], // point of the icon which will correspond to marker's location
-
-		});
-
-		var myIcon3 = L.icon({
-			iconUrl: '/images/main/the-mark.png',
-			iconSize: [32, 32],
-			iconAnchor: [16, 16], // point of the icon which will correspond to marker's location
-
-		});
-		var content2 = '<iframe style="width: 700px; height: 500px;border:none;" src="popup_02.html"></iframe>';
-		var content3 = '<iframe style="width: 900px; height: 600px;border:none;" src="popup_03.html"></iframe>';
-		var custom_popup_02 = L.popup({ maxWidth: 700 }).setContent(content2);
-		var custom_popup_03 = L.popup({ maxWidth: 900 }).setContent(content3);
-
 		;
 
-		var marker_01 = L.marker([58.29032, 26.645223], { icon: myIcon1 }).addTo(map);
+		var marker_01 = L.marker([58.290732, 24.645223], { icon: myIcon1 }).addTo(map);
 		marker_01.bindPopup(custom_popup_01);
 		marker_01.on('click', hideFilters);
 		marker_01.on('click', hideWarnings);
