@@ -50,7 +50,7 @@
 			<span class="dot" style="margin-left:15px; background-color: yellow"></span>
 			<p style="display:inline-block; margin:0;padding-right: 20px;">Cadastre</p>
 			<label class="switch">
-				<input checked type="checkbox" onchange="hideYellows()">
+				<input checked type="checkbox" onchange="hideColor('yellow')">
 				<span class="slider round"></span>
 			</label>
 		</div>
@@ -58,7 +58,7 @@
 			<span class="dot" style="margin-left:15px; background-color:blue"></span>
 			<p style="display:inline-block; margin:0; padding-right: 20px;">Still water</p>
 			<label class="switch">
-				<input checked type="checkbox" onchange="hideBlue()">
+				<input checked type="checkbox" onchange="hideColor('blue')">
 				<span class="slider round"></span>
 			</label>
 		</div>
@@ -66,7 +66,7 @@
 			<span class="dot" style="margin-left:15px; background-color:#81BEF7"></span>
 			<p style="display:inline-block; margin:0; padding-right: 20px;">Rivers</p>
 			<label class="switch">
-				<input checked type="checkbox" onchange="hideTeal()">
+				<input checked type="checkbox" onchange="hideColor('#81BEF7')">
 				<span class="slider round"></span>
 			</label>
 		</div>
@@ -74,7 +74,7 @@
 			<span class="dot" style="margin-left:15px; background-color:silver"></span>
 			<p style="display:inline-block; margin:0; padding-right: 20px;">Roads</p>
 			<label class="switch">
-				<input checked type="checkbox" onchange="hideSilver()">
+				<input checked type="checkbox" onchange="hideColor('silver')">
 				<span class="slider round"></span>
 			</label>
 		</div>
@@ -85,7 +85,7 @@
 		<div>
 			<h4 style="padding-left:15px">Time in years</h4>
 			<div class="slidecontainer" style="padding-left: 50px; padding-top: -50px;">
-				<input type="range" min="1" max="10" value="5" id="timeRange">
+				<input type="range" min="1" max="2" value="1" id="timeRange">
 				<p>Time: <span id="timeInYears"></span></p>
 			</div>
 		</div>
@@ -182,13 +182,14 @@
 				 border: 2px solid white; 
 				 background: black; 
 				 text-align: center;">
-			<p style="margin: auto; vertical-align:middle; color: white;">Select</p>
+			<p style="margin: auto; vertical-align:middle; color: white;">Investigate</p>
 		</button>
 	</div>
 
 	<div id='map' style='width: 100%; height:100%'></div>
 	<script>
-		var map = L.map('map', { zoomControl: false }).setView([58.744355, 25.628880], 7);
+		var map = L.map('map', { zoomControl: false }).setView([58.396405 , 26.397722], 7);
+		var init = false;
 		var wmsLayer;
 
 
@@ -217,6 +218,10 @@
 				$('.card').hide();
 			}
 		}
+		
+		function onSubmitClick(){
+			initialize();
+		}
 
 		function onAreaClick() {
 			if ($('.card4').css('display') == 'none') {
@@ -244,7 +249,7 @@
 			if (event.keyCode === 13) {
 				// Cancel the default action, if needed
 				event.preventDefault();
-				map.setView([58.808396, 26.250682], 14);
+				map.setView([58.396405 , 26.397722], 14);
 			}
 		});
 
@@ -266,119 +271,66 @@
 
 		}
 
-
-
-		function hideYellows() {
-			let elements = document.getElementsByClassName("leaflet-interactive");
-			for (let element of elements) {
-				stroke = element.getAttribute('stroke')
-				if (stroke === "yellow") {
-					if (element.style.display === "") {
-						element.style.display = "none";
-
-					} else {
-						element.style.display = ""
-					}
-
-
-				}
-			}
-		}
-
-		function hideBlue() {
-			let elements = document.getElementsByClassName("leaflet-interactive");
-			for (let element of elements) {
-				stroke = element.getAttribute('stroke')
-				if (stroke === "blue") {
-					if (element.style.display === "") {
-						element.style.display = "none";
-
-					} else {
-						element.style.display = ""
-					}
-
-
-				}
-			}
-		}
-		
-		function hideSilver() {
-			let elements = document.getElementsByClassName("leaflet-interactive");
-			for (let element of elements) {
-				stroke = element.getAttribute('stroke')
-				if (stroke === "silver") {
-					if (element.style.display === "") {
-						element.style.display = "none";
-
-					} else {
-						element.style.display = ""
-					}
-
-
-				}
-			}
-		}
-		
-		function hideTeal() {
-			let elements = document.getElementsByClassName("leaflet-interactive");
-			for (let element of elements) {
-				stroke = element.getAttribute('stroke')
-				if (stroke === "#81BEF7") {
-					if (element.style.display === "") {
-						element.style.display = "none";
-
-					} else {
-						element.style.display = ""
-					}
-
-
-				}
-			}
-		}
-
-		function hideGreens() {
-			let elements = document.getElementsByClassName("leaflet-interactive");
-			for (let element of elements) {
-				stroke = element.getAttribute('stroke')
-				if (stroke === "green") {
-					if (element.style.display === "") {
-						element.style.display = "none";
-
-					} else {
-						element.style.display = ""
-					}
-
-
-				}
-			}
-		}
-
+		function initialize() {
+			if(!init)
+			{
+				$.getJSON("/json/DangerClass3.geojson", function (data) {
+			L.geoJSON(data, {
+				color: 'red',
+				pane: 'top',
+				style: { color: 'red', weight: 4 }
+			}).addTo(map);
+			});
 		$.getJSON("/json/cadastre_4326.geojson", function (data) {
 			L.geoJSON(data, {
-				color: 'yellow'
+				color: 'yellow',
+				pane: 'bottom',
+				weight: '0.2'
 			}).addTo(map);
-		});
-
-
+			});
 		$.getJSON("/json/rivers_4326.geojson", function (data) {
 			L.geoJSON(data, {
-				color: '#81BEF7'
+					color: '#81BEF7',
+				pane: 'bottom',
+				weight: '0.2'
 			}).addTo(map);
 		});
-
-
 		$.getJSON("/json/roads_4326.geojson", function (data) {
 			L.geoJSON(data, {
-				color: 'silver'
+				color: 'silver',
+				pane: 'bottom',
+				weight: '0.2'
 			}).addTo(map);
 		});
-		
-		
 		$.getJSON("/json/stillwater_4326.geojson", function (data) {
 			L.geoJSON(data, {
-				color: 'blue'
+				color: 'blue',
+				pane: 'bottom',
+				weight: '0.2'
 			}).addTo(map);
 		});
+
+			}
+		}
+
+		function hideColor(color) {
+			let elements = document.getElementsByClassName("leaflet-interactive");
+			for (let element of elements) {
+				stroke = element.getAttribute('stroke')
+				if (stroke === color) {
+					if (element.style.display === "") {
+						element.style.display = "none";
+
+					} else {
+						element.style.display = ""
+					}
+
+
+				}
+			}
+		}
+		map.createPane('bottom');
+		map.createPane('top');
 
 		var content1 = '<iframe style="width: 900px; height: 600px;border:none; position:fixed" src="popup_01.html"></iframe>';
 		var custom_popup_01 = L.popup({ maxWidth: 900 }).setContent(content1);
@@ -410,19 +362,7 @@
 
 		L.set
 
-		var myIcon1 = L.icon({
-			iconUrl: '/images/main/the-mark.png',
-			iconSize: [32, 32],
-			iconAnchor: [16, 16], // point of the icon which will correspond to marker's location
 
-		});
-		;
-
-		var marker_01 = L.marker([58.290732, 24.645223], { icon: myIcon1 }).addTo(map);
-		marker_01.bindPopup(custom_popup_01);
-		marker_01.on('click', hideLayer);
-		marker_01.on('click', hideExport);
-		
 
 	</script>
 
