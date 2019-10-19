@@ -48,17 +48,33 @@
 		<!-- Rounded switch -->
 		<div style="margin-top:15px">
 			<span class="dot" style="margin-left:15px; background-color: yellow"></span>
-			<p style="display:inline-block; margin:0;padding-right: 20px;">Roads</p>
+			<p style="display:inline-block; margin:0;padding-right: 20px;">Cadastre</p>
 			<label class="switch">
 				<input checked type="checkbox" onchange="hideYellows()">
 				<span class="slider round"></span>
 			</label>
 		</div>
 		<div style="margin-top:15px">
-			<span class="dot" style="margin-left:15px; background-color:green"></span>
-			<p style="display:inline-block; margin:0; padding-right: 20px;">Land borders</p>
+			<span class="dot" style="margin-left:15px; background-color:blue"></span>
+			<p style="display:inline-block; margin:0; padding-right: 20px;">Still water</p>
 			<label class="switch">
-				<input checked type="checkbox" onchange="hideGreens()">
+				<input checked type="checkbox" onchange="hideBlue()">
+				<span class="slider round"></span>
+			</label>
+		</div>
+		<div style="margin-top:15px">
+			<span class="dot" style="margin-left:15px; background-color:#81BEF7"></span>
+			<p style="display:inline-block; margin:0; padding-right: 20px;">Rivers</p>
+			<label class="switch">
+				<input checked type="checkbox" onchange="hideTeal()">
+				<span class="slider round"></span>
+			</label>
+		</div>
+		<div style="margin-top:15px">
+			<span class="dot" style="margin-left:15px; background-color:silver"></span>
+			<p style="display:inline-block; margin:0; padding-right: 20px;">Roads</p>
+			<label class="switch">
+				<input checked type="checkbox" onchange="hideSilver()">
 				<span class="slider round"></span>
 			</label>
 		</div>
@@ -238,11 +254,45 @@
 			}
 		}
 
-		function hideReds() {
+		function hideBlue() {
 			let elements = document.getElementsByClassName("leaflet-interactive");
 			for (let element of elements) {
 				stroke = element.getAttribute('stroke')
-				if (stroke === "violet") {
+				if (stroke === "blue") {
+					if (element.style.display === "") {
+						element.style.display = "none";
+
+					} else {
+						element.style.display = ""
+					}
+
+
+				}
+			}
+		}
+		
+		function hideSilver() {
+			let elements = document.getElementsByClassName("leaflet-interactive");
+			for (let element of elements) {
+				stroke = element.getAttribute('stroke')
+				if (stroke === "silver") {
+					if (element.style.display === "") {
+						element.style.display = "none";
+
+					} else {
+						element.style.display = ""
+					}
+
+
+				}
+			}
+		}
+		
+		function hideTeal() {
+			let elements = document.getElementsByClassName("leaflet-interactive");
+			for (let element of elements) {
+				stroke = element.getAttribute('stroke')
+				if (stroke === "#81BEF7") {
 					if (element.style.display === "") {
 						element.style.display = "none";
 
@@ -272,23 +322,30 @@
 			}
 		}
 
-		$.getJSON("/json/wgs84_3.json", function (data) {
+		$.getJSON("/json/cadastre_4326.geojson", function (data) {
 			L.geoJSON(data, {
-				color: 'violet'
+				color: 'yellow'
 			}).addTo(map);
 		});
 
 
-		$.getJSON("/json/wgs_cut_19_2509.json", function (data) {
+		$.getJSON("/json/rivers_4326.geojson", function (data) {
 			L.geoJSON(data, {
-				color: 'violet'
+				color: '#81BEF7'
 			}).addTo(map);
 		});
 
 
 		$.getJSON("/json/roads_4326.geojson", function (data) {
 			L.geoJSON(data, {
-				color: 'yellow'
+				color: 'silver'
+			}).addTo(map);
+		});
+		
+		
+		$.getJSON("/json/stillwater_4326.geojson", function (data) {
+			L.geoJSON(data, {
+				color: 'blue'
 			}).addTo(map);
 		});
 
