@@ -64,22 +64,44 @@
 		</div>
 	</div>
 
-	<div class=card4 style="display:none; margin-top:210px; height: 240px">
+	<div class=card4 style="display:none; margin-top:210px; height: 300px">
 		<h3 style="margin-left:80px;">Area Specs</h3>
 		<div>
-			<h4 style="padding-left:15px">Years</h4>
+			<h4 style="padding-left:15px">Time in years</h4>
 			<div class="slidecontainer" style="padding-left: 50px; padding-top: -50px;">
 				<input type="range" min="1" max="10" value="5" id="timeRange">
+				<p>Time: <span id="timeInYears"></span></p>
 			</div>
 		</div>
 		<div>
 			<h4 style="padding-left:15px">Distance in km</h4>
 			<div class="slidecontainer" style="padding-left: 50px; padding-top: -50px;">
 				<input type="range" min="1" max="10" value="3" id="distanceRange">
+				<p>Distance: <span id="distance"></span></p>
 			</div>
 		</div>
 	</div>
 
+	<script>
+		var timeInput = document.getElementById("timeRange");
+		var timeOutput = document.getElementById("timeInYears");
+	
+		timeOutput.innerHTML = timeInput.value;
+		timeInput.oninput = function() {
+			timeOutput.innerHTML = this.value;
+		}
+	</script>
+
+	<script>
+		var distanceInput = document.getElementById("distanceRange");
+		var distanceOutput = document.getElementById("distance");
+		distanceOutput.innerHTML = distanceInput.value;
+
+		distanceInput.oninput = function() {
+			distanceOutput.innerHTML = this.value;
+		}
+	</script>
+	
 	<div id="widget">
 		<p style="
 					color: #ddd;
@@ -347,11 +369,13 @@
 			}
 		}
 
+
 		//-- usage --//
 		preload(
 			"/images/illustrations/10422_0428.png",
 		)
 	</script>
+
 </body>
 
 </html>
