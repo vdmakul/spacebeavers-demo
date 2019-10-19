@@ -159,11 +159,11 @@ input:checked+.slider:before {
 }
 
 .card2-p:hover {
-    color: #0c3eee;
+    color: whitesmoke;
 }
 
 .attention-label:hover {
-    color: #0c3eee
+    color: whitesmoke;
 }
 
 .btn {
