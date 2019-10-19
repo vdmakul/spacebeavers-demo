@@ -18,7 +18,7 @@
 		crossorigin=""></script>
 	<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
 
-	<script src="https://maps.googleapis.com/maps/api/js?key=MAPS_API_KEY" async
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7Lmo1uTMWo9GdtGgfz3Uc3edPLCGkUMc" async
 		defer></script>
 	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
 		integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
@@ -137,7 +137,7 @@
 		<div class="wrapper">
 			<div class="card2">
 				<button type="button" onclick="onExportClick()" class="btn">
-					<img src="/images/main/bell.svg" style="height: 40px;
+					<img src="/images/main/export.svg" style="height: 40px;
 						padding-bottom: 20px;
 						margin: auto;
 						display: table;" />
@@ -147,7 +147,7 @@
 
 			<div class="card2">
 				<button type="button" onclick="onLayerClick()" class="btn">
-					<img src="/images/main/filter.svg" style="height: 40px;
+					<img src="/images/main/layers-24px.svg" style="height: 40px;
 						padding-bottom: 20px;
 						margin: auto;
 						display: table;" />
@@ -157,7 +157,7 @@
 
 			<div class="card2">
 				<button type="button" onclick="onSelectAreaClick()" class="btn">
-					<img src="/images/main/filter.svg" style="height: 40px;
+					<img src="/images/main/select.svg" style="height: 40px;
 						padding-bottom: 20px;
 						margin: auto;
 						display: table;" />
@@ -167,7 +167,7 @@
 
 			<div class="card2">
 				<button type="button" onclick="onAreaClick()" class="btn">
-					<img src="/images/main/filter.svg" style="height: 40px;
+					<img src="/images/main/specify.svg" style="height: 40px;
 						padding-bottom: 20px;
 						margin: auto;
 						display: table;" />
@@ -175,6 +175,15 @@
 				</button>
 			</div>
 		</div>
+		<button type="button" onclick="onSubmitClick()" style="margin-left: 35px;
+				 height: 40px; 
+				 width: 180px;
+				 border-radius: 12px; 
+				 border: 2px solid white; 
+				 background: black; 
+				 text-align: center;">
+			<p style="margin: auto; vertical-align:middle; color: white;">Select</p>
+		</button>
 	</div>
 
 	<div id='map' style='width: 100%; height:100%'></div>
