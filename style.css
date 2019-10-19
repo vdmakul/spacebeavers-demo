@@ -1,0 +1,223 @@
+html,
+body {
+    height: 100%;
+    margin: 0;
+    font-family: 'Roboto Condensed', sans-serif;
+
+}
+
+#map {
+    width: 600px;
+    height: 400px;
+}
+
+#widget {
+    width: 250px;
+    height: 100%;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.7);
+    position: absolute
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 52px;
+    height: 20px;
+    float: right;
+    margin-right: 20px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* The slider */
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 12px;
+    width: 13px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked+.slider {
+    background-color: #0c3eee;
+}
+
+input:focus+.slider {
+    box-shadow: 0 0 1px #0c3eee;
+}
+
+input:checked+.slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+.input-search {
+    background-color: rgba(0, 0, 0, 0.7);
+    left: 250px;
+    padding: 5px;
+    padding-left: 15px;
+    height: 30px;
+    margin: 10px;
+    border-radius: 30px;
+    border: 1px solid white;
+    color: white;
+    display: table;
+    margin: auto;
+}
+
+
+.dot {
+    height: 15px;
+    width: 15px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.location-button {
+    width: 100%;
+    height: 50px;
+    margin: 0;
+}
+
+.date {
+    width: 100%;
+    height: 50px;
+    margin: 0;
+}
+
+.card {
+    position: absolute;
+    height: 189px;
+    width: 235px;
+    left: 261px;
+    top: 0px;
+    margin-left: 5px;
+    margin-top: 10px;
+    color: white;
+    z-index: 1000;
+    background: rgba(0, 0, 0, 0.7);
+}
+
+.card2 {
+    width: 50%;
+    margin-bottom: 20px;
+}
+
+.card2-p {
+    text-align: center;
+    margin-top: 0;
+    font-size: 18px;
+    color: white;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.card2-p:hover {
+    color: #0c3eee;
+}
+
+.attention-label:hover {
+    color: #0c3eee
+}
+
+.logout {
+    width: 200px;
+    height: 50px;
+    bottom: 0;
+    position: absolute;
+    background: #0c3eee;
+    cursor: pointer;
+    border-radius: 30px;
+    margin: 25px 25px 10px 25px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+    transition: box-shadow 0.3s ease-in-out;
+}
+.logout:hover {
+    box-shadow: 0 5px 20px rgba(0,0,0,0.8);
+  }
+
+.btn {
+    background: transparent;
+    border: none;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.card3 {
+    position: absolute;
+    height: auto;
+    left: 261px;
+    top: 200px;
+    color: white;
+    margin-left: 5px;
+    margin-top: 10px;
+    z-index: 1000;
+    background: rgba(0, 0, 0, 0.7);
+    display: none;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.warnings {
+    width: 100%;
+    height: 40px;
+}
+
+.close-btn {
+    background: transparent;
+    color: white;
+    /* border: 1px solid white; */
+    float: right;
+    padding: 10px;
+    border: none;
+}
+
+.wrapper {
+    padding-top: 30px;
+    display: flex;
+    flex-flow: wrap
+}
+
+input::placeholder {
+    color: white;
+}
+
+.leaflet-bottom.leaflet-right {
+    margin-bottom: 0 !important;
+}

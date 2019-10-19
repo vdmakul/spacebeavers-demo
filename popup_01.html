@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+	<title>GeoJSON tutorial - Leaflet</title>
+
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link rel="shortcut icon" type="image/x-icon" href="docs/images/favicon.ico" />
+
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
+		integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+		crossorigin="" />
+	<script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"
+		integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
+		crossorigin=""></script>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+
+	<script src="https://maps.googleapis.com/maps/api/js?key=MAPS_API_KEY" async
+		defer></script>
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
+		integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+		crossorigin="" />
+	<script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"
+		integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA=="
+		crossorigin=""></script>
+	<script src='https://unpkg.com/leaflet.gridlayer.googlemutant@latest/Leaflet.GoogleMutant.js'></script>
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-ajax/2.1.0/leaflet.ajax.js"></script>
+	<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+
+
+
+	<style>
+			html,
+			body {
+				height: 100%;
+				margin: 0;
+				font-family: 'Montserrat', sans-serif;
+	
+			}
+	
+			#map {
+				width: 600px;
+				height: 400px;
+			}
+	
+			#widget {
+				width: 250px;
+				height: 100%;
+				z-index: 1000;
+				top: 0;
+				left: 0;
+				background: white;
+				position: absolute
+			}
+	
+			.switch {
+				position: relative;
+				display: inline-block;
+				width: 60px;
+				height: 20px;
+				float: right;
+				margin-right: 20px;
+			}
+	
+			/* Hide default HTML checkbox */
+			.switch input {
+				opacity: 0;
+				width: 0;
+				height: 0;
+			}
+	
+			/* The slider */
+			.slider {
+				position: absolute;
+				cursor: pointer;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				background-color: #ccc;
+				-webkit-transition: .4s;
+				transition: .4s;
+			}
+	
+			.slider:before {
+				position: absolute;
+				content: "";
+				height: 12px;
+				width: 13px;
+				left: 4px;
+				bottom: 4px;
+				background-color: white;
+				-webkit-transition: .4s;
+				transition: .4s;
+			}
+	
+			input:checked+.slider {
+				background-color: #2196F3;
+			}
+	
+			input:focus+.slider {
+				box-shadow: 0 0 1px #2196F3;
+			}
+	
+			input:checked+.slider:before {
+				-webkit-transform: translateX(26px);
+				-ms-transform: translateX(26px);
+				transform: translateX(26px);
+			}
+	
+			/* Rounded sliders */
+			.slider.round {
+				border-radius: 34px;
+			}
+	
+			.slider.round:before {
+				border-radius: 50%;
+			}
+	
+			.input-search {
+				padding: 5px;
+				height: 30px;
+				width: 85%;
+				margin: 10px;
+				border-radius: 30px;
+				border: 1px solid darkgrey;
+			}
+	
+			.dot {
+				height: 15px;
+				width: 15px;
+				background-color: #bbb;
+				border-radius: 50%;
+				display: inline-block;
+			}
+		</style>
+<!-- 1 -->
+<link title="timeline-styles" rel="stylesheet" href="https://cdn.knightlab.com/libs/timeline3/latest/css/timeline.css">
+<!-- 2 -->
+<script src="https://cdn.knightlab.com/libs/timeline3/latest/js/timeline.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+</head>
+
+<body>
+
+<div id="timeline_01" style="width: 100%; height: 79%; " ></div>
+<div id="chart-container" style="width: 100%; height: 21%; " ></div>
+
+<script type="text/javascript">
+        // The TL.Timeline constructor takes at least two arguments:
+        // the id of the Timeline container (no '#'), and
+        // the URL to your JSON data file or Google spreadsheet.
+        // the id must refer to an element "above" this code,
+        // and the element must have CSS styling to give it width and height
+        // optionally, a third argument with configuration options can be passed.
+        // See below for more about options.
+      var timeline_options = {
+	      timenav_height:  5,
+	      timenav_height_min: 1,
+	      is_embed: true,
+	      slide_padding_lr: 25,
+		  duration: 1,
+      }
+	  var timeline = new TL.Timeline('timeline_01', '/json/gallery_01.json', timeline_options);
+
+	  var ron58Data = [[Date.UTC(2018, -1+05, 03), 0.210587], [Date.UTC(2018, -1+05, 09), 0.172796], [Date.UTC(2018, -1+05, 15), 0.163194], [Date.UTC(2018, -1+05, 21), 0.163468], [Date.UTC(2018, -1+05, 27), 0.17498], [Date.UTC(2018, -1+06, 02), 0.159526], [Date.UTC(2018, -1+06, 08), 0.172553], [Date.UTC(2018, -1+06, 14), 0.159822], [Date.UTC(2018, -1+06, 20), 0.156316], [Date.UTC(2018, -1+06, 26), 0.175693], [Date.UTC(2018, -1+07, 02), 0.183549], [Date.UTC(2018, -1+07, 08), 0.164537], [Date.UTC(2018, -1+07, 14), 0.157708], [Date.UTC(2018, -1+07, 20), null], [Date.UTC(2018, -1+08, 01), 0.67486], [Date.UTC(2018, -1+08, 07), 0.286205], [Date.UTC(2018, -1+08, 13), null], [Date.UTC(2018, -1+08, 25), 0.66661], [Date.UTC(2018, -1+08, 31), 0.334716], [Date.UTC(2018, -1+09, 06), 0.369593], [Date.UTC(2018, -1+09, 12), 0.198], [Date.UTC(2018, -1+09, 18), 0.74162], [Date.UTC(2018, -1+09, 24), 0.648568], [Date.UTC(2018, -1+09, 30), 0.842263], [Date.UTC(2018, -1+10, 06), 0.91494], [Date.UTC(2018, -1+10, 12), 0.905563], [Date.UTC(2018, -1+10, 18), 0.918087], [Date.UTC(2018, -1+10, 24), 0.174227], [Date.UTC(2018, -1+10, 30), null]]; 
+	  var ron87Data = [[Date.UTC(2018, -1+05, 05), 0.181628],[Date.UTC(2018, -1+05, 11), 0.153953],[Date.UTC(2018, -1+05, 17), 0.164078],[Date.UTC(2018, -1+05, 23), 0.158343],[Date.UTC(2018, -1+05, 29), 0.172437],[Date.UTC(2018, -1+06, 04), 0.153003],[Date.UTC(2018, -1+06, 10), 0.159325],[Date.UTC(2018, -1+06, 16), 0.163305],[Date.UTC(2018, -1+06, 22), 0.180074],[Date.UTC(2018, -1+06, 28), 0.226467],[Date.UTC(2018, -1+07, 04), 0.196999],[Date.UTC(2018, -1+07, 10), 0.165494],[Date.UTC(2018, -1+07, 16), 0.171847],[Date.UTC(2018, -1+07, 22), 0.164077],[Date.UTC(2018, -1+07, 28), 0.627437],[Date.UTC(2018, -1+08, 03), 0.27043],[Date.UTC(2018, -1+08, 09), 0.238649],[Date.UTC(2018, -1+08, 15), 0.357104],[Date.UTC(2018, -1+08, 21), 0.431408],[Date.UTC(2018, -1+08, 27), 0.542952],[Date.UTC(2018, -1+09, 02), 0.35711],[Date.UTC(2018, -1+09, 08), 0.232481],[Date.UTC(2018, -1+09, 14), 0.387412],[Date.UTC(2018, -1+09, 20), 0.404166],[Date.UTC(2018, -1+09, 26), 0.625469],[Date.UTC(2018, -1+10, 02), 0.778089],[Date.UTC(2018, -1+10, 08), 0.853976],[Date.UTC(2018, -1+10, 14), 0.897944],[Date.UTC(2018, -1+10, 20), 0.892851],[Date.UTC(2018, -1+10, 26), null]];
+	  var ron160Data = [[Date.UTC(2018, -1+05, 04), 0.20874],[Date.UTC(2018, -1+05, 10), 0.148022],[Date.UTC(2018, -1+05, 16), 0.150644],[Date.UTC(2018, -1+05, 22), 0.163441],[Date.UTC(2018, -1+05, 28), 0.164883],[Date.UTC(2018, -1+06, 03), 0.182057],[Date.UTC(2018, -1+06, 09), 0.156889],[Date.UTC(2018, -1+06, 15), 0.157712],[Date.UTC(2018, -1+06, 21), 0.182493],[Date.UTC(2018, -1+06, 27), 0.188695],[Date.UTC(2018, -1+07, 03), 0.187513],[Date.UTC(2018, -1+07, 09), 0.142],[Date.UTC(2018, -1+07, 15), 0.153981],[Date.UTC(2018, -1+07, 21), 0.177935],[Date.UTC(2018, -1+07, 27), 0.545182],[Date.UTC(2018, -1+08, 02), 0.526187],[Date.UTC(2018, -1+08, 08), 0.319576],[Date.UTC(2018, -1+08, 14), 0.198414],[Date.UTC(2018, -1+08, 20), 0.21198],[Date.UTC(2018, -1+08, 26), 0.591022],[Date.UTC(2018, -1+09, 01), 0.338877],[Date.UTC(2018, -1+09, 07), 0.385716],[Date.UTC(2018, -1+09, 13), 0.217689],[Date.UTC(2018, -1+09, 19), 0.634836],[Date.UTC(2018, -1+09, 25), 0.494998],[Date.UTC(2018, -1+10, 01), 0.780369],[Date.UTC(2018, -1+10, 07), 0.858151],[Date.UTC(2018, -1+10, 13), 0.890535],[Date.UTC(2018, -1+10, 19), 0.89627],[Date.UTC(2018, -1+10, 25), 0.813793],[Date.UTC(2018, -1+10, 31), null]];
+	  
+
+	//   var imageDates = [[Date.UTC(2018, -1+04, 22), Date.UTC(2018, -1+04, 28)],[Date.UTC(2018, -1+04, 28), Date.UTC(2018, -1+05, 04)],[Date.UTC(2018, -1+05, 04), Date.UTC(2018, -1+05, 10)],[Date.UTC(2018, -1+05, 10), Date.UTC(2018, -1+05, 16)],[Date.UTC(2018, -1+05, 16), Date.UTC(2018, -1+05, 22)],[Date.UTC(2018, -1+05, 22), Date.UTC(2018, -1+05, 28)],[Date.UTC(2018, -1+05, 28), Date.UTC(2018, -1+06, 03)],[Date.UTC(2018, -1+06, 03), Date.UTC(2018, -1+06, 09)],[Date.UTC(2018, -1+06, 09), Date.UTC(2018, -1+06, 15)],[Date.UTC(2018, -1+06, 15), Date.UTC(2018, -1+06, 21)],[Date.UTC(2018, -1+06, 21), Date.UTC(2018, -1+06, 27)],[Date.UTC(2018, -1+06, 27), Date.UTC(2018, -1+07, 03)],[Date.UTC(2018, -1+07, 03), Date.UTC(2018, -1+07, 09)],[Date.UTC(2018, -1+07, 09), Date.UTC(2018, -1+07, 15)],[Date.UTC(2018, -1+07, 15), Date.UTC(2018, -1+07, 21)],[Date.UTC(2018, -1+07, 21), Date.UTC(2018, -1+07, 27)],[Date.UTC(2018, -1+07, 27), Date.UTC(2018, -1+08, 02)],[Date.UTC(2018, -1+08, 02), Date.UTC(2018, -1+08, 08)],[Date.UTC(2018, -1+08, 08), Date.UTC(2018, -1+08, 14)],[Date.UTC(2018, -1+08, 14), Date.UTC(2018, -1+08, 20)],[Date.UTC(2018, -1+08, 20), Date.UTC(2018, -1+08, 26)],[Date.UTC(2018, -1+08, 26), Date.UTC(2018, -1+09, 01)],[Date.UTC(2018, -1+09, 01), Date.UTC(2018, -1+09, 07)],[Date.UTC(2018, -1+09, 07), Date.UTC(2018, -1+09, 13)],[Date.UTC(2018, -1+09, 13), Date.UTC(2018, -1+09, 19)],[Date.UTC(2018, -1+09, 19), Date.UTC(2018, -1+09, 25)],[Date.UTC(2018, -1+09, 25), Date.UTC(2018, -1+10, 01)],[Date.UTC(2018, -1+10, 01), Date.UTC(2018, -1+10, 07)],[Date.UTC(2018, -1+10, 07), Date.UTC(2018, -1+10, 13)],[Date.UTC(2018, -1+10, 13), Date.UTC(2018, -1+10, 19)],[Date.UTC(2018, -1+10, 19), Date.UTC(2018, -1+10, 25)],[Date.UTC(2018, -1+10, 25), Date.UTC(2018, -1+10, 31)]];
+	  var imageDates = [[Date.UTC(2018, -1+05, 04), Date.UTC(2018, -1+05, 10)],[Date.UTC(2018, -1+05, 10), Date.UTC(2018, -1+05, 16)],[Date.UTC(2018, -1+05, 16), Date.UTC(2018, -1+05, 22)],[Date.UTC(2018, -1+05, 22), Date.UTC(2018, -1+05, 28)],[Date.UTC(2018, -1+05, 28), Date.UTC(2018, -1+06, 03)],[Date.UTC(2018, -1+06, 03), Date.UTC(2018, -1+06, 09)],[Date.UTC(2018, -1+06, 09), Date.UTC(2018, -1+06, 15)],[Date.UTC(2018, -1+06, 15), Date.UTC(2018, -1+06, 21)],[Date.UTC(2018, -1+06, 21), Date.UTC(2018, -1+06, 27)],[Date.UTC(2018, -1+06, 27), Date.UTC(2018, -1+07, 03)],[Date.UTC(2018, -1+07, 03), Date.UTC(2018, -1+07, 09)],[Date.UTC(2018, -1+07, 09), Date.UTC(2018, -1+07, 15)],[Date.UTC(2018, -1+07, 15), Date.UTC(2018, -1+07, 21)],[Date.UTC(2018, -1+07, 21), Date.UTC(2018, -1+07, 27)],[Date.UTC(2018, -1+07, 27), Date.UTC(2018, -1+08, 02)],[Date.UTC(2018, -1+08, 02), Date.UTC(2018, -1+08, 08)],[Date.UTC(2018, -1+08, 08), Date.UTC(2018, -1+08, 14)],[Date.UTC(2018, -1+08, 14), Date.UTC(2018, -1+08, 20)],[Date.UTC(2018, -1+08, 20), Date.UTC(2018, -1+08, 26)],[Date.UTC(2018, -1+08, 26), Date.UTC(2018, -1+09, 01)],[Date.UTC(2018, -1+09, 01), Date.UTC(2018, -1+09, 07)],[Date.UTC(2018, -1+09, 07), Date.UTC(2018, -1+09, 13)],[Date.UTC(2018, -1+09, 13), Date.UTC(2018, -1+09, 19)],[Date.UTC(2018, -1+09, 19), Date.UTC(2018, -1+09, 25)],[Date.UTC(2018, -1+09, 25), Date.UTC(2018, -1+10, 01)],[Date.UTC(2018, -1+10, 01), Date.UTC(2018, -1+10, 07)],[Date.UTC(2018, -1+10, 07), Date.UTC(2018, -1+10, 13)],[Date.UTC(2018, -1+10, 13), Date.UTC(2018, -1+10, 19)],[Date.UTC(2018, -1+10, 19), Date.UTC(2018, -1+10, 25)],[Date.UTC(2018, -1+10, 25), Date.UTC(2018, -1+10, 31)]];
+	  var charts = Highcharts.chart('chart-container', {
+
+			title: {
+				text: 'Mean coherence values',
+				floating: true,
+				align: 'center'
+			},
+			chart: {
+				marginTop: 40
+			},
+			xAxis: {
+				type: 'datetime',
+				tickInterval: 1000 * 3600 * 24 * 15, // 1 day
+				labels: {
+					formatter() {
+					return Highcharts.dateFormat('%d - %m', this.value)
+					}
+				}
+			},
+			legend: {
+				layout: 'vertical',
+				align: 'right',
+				verticalAlign: 'middle',
+				reversed: true
+			},
+			series: [
+				{
+					name: 'VV mean coherence,<br> RON 58',
+					data: ron58Data
+				},	
+				{
+					name: 'VV mean coherence,<br> RON 87',
+					data: ron87Data
+				},
+				{
+					name: 'VV mean coherence,<br> RON 160',
+					data: ron160Data
+				},
+			],
+			plotOptions: {
+				series: {
+					cursor: 'pointer',
+					point: {
+						events: {
+							click: function (e) {
+								if (e.point.series.data[0].y != 0.20874) { //proceed on RON 160 only
+									return;
+								}
+								var date = new Date(e.point.x);
+								var i = 0;
+								for (i = 0; i < imageDates.length; i++) {
+									var dateFrom = imageDates[i][0];
+									var dateTo = imageDates[i][1];
+									if (dateFrom <= date && date < dateTo) {
+										timeline.goTo(i);	
+										break;
+									}
+								}
+							}
+						}
+					},
+					marker: {
+						lineWidth: 1
+					}
+				}
+			},
+		});
+
+		timeline.on('change', function(data) {
+		  var i = 0;
+		  for (i = 0; i < imageDates.length; i++) {
+			if (timeline.getData(i).unique_id === data.unique_id) {
+				var dateFrom = imageDates[i][0];
+				var dateTo = imageDates[i][1];
+
+				var j = 0;
+				for (j = 0; j < charts.series[2].data.length; j++) {
+					var date = charts.series[2].data[j].x;
+					if (dateFrom <= date && date < dateTo) {
+						charts.series[2].data[j].select();
+						break;
+					}
+				}
+				
+				break;
+			}
+		  }
+	  });
+	</script>
+
+</body>
+
+</html>
