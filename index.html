@@ -147,7 +147,7 @@
 		<div class="wrapper">
 
 
-			<button type="button" class="action-button disabled" onclick="onInvestigateClick()" style="margin: 0 35px 35px 35px;">
+			<button type="button" id="investigate-button" class="action-button disabled" onclick="onInvestigateClick()" style="margin: 0 35px 35px 35px;">
 					<p style="margin: auto; vertical-align:middle; color: white;">Investigate</p>
 				</button>
 
@@ -260,6 +260,7 @@
 		
 		function onInvestigateClick(){
 			initialize();
+			$('#investigate-button').addClass('disabled');
 		}
 
 		function onAreaClick() {
