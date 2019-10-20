@@ -85,7 +85,7 @@
 		<div>
 			<h4 style="padding-left:15px">Time in years</h4>
 			<div class="slidecontainer" style="padding-left: 50px; padding-top: -50px;">
-				<input type="range" min="1" max="2" value="1" id="timeRange">
+				<input type="range" min="0" max="3" value="0" id="timeRange">
 				<p>Time: <span id="timeInYears"></span></p>
 			</div>
 		</div>
@@ -107,15 +107,6 @@
 		</button>
 	</div>
 
-	<script>
-		var timeInput = document.getElementById("timeRange");
-		var timeOutput = document.getElementById("timeInYears");
-	
-		timeOutput.innerHTML = timeInput.value;
-		timeInput.oninput = function() {
-			timeOutput.innerHTML = this.value;
-		}
-	</script>
 
 	<script>
 		var distanceInput = document.getElementById("distanceRange");
@@ -184,8 +175,7 @@
 				</button>
 			</div>
 		</div>
-<<<<<<< HEAD
-		<button type="button" onclick="onSubmitClick()" style="margin-left: 35px;
+		<button type="button" onclick="onInvestigateClick()" style="margin-left: 35px;
 				 height: 40px; 
 				 width: 180px;
 				 border-radius: 12px; 
@@ -202,6 +192,10 @@
 		var map = L.map('map', { zoomControl: false }).setView([58.396405 , 26.397722], 7);
 		var init = false;
 		var wmsLayer;
+		var danger1, danger2, danger3;
+		var dangerLevel=0;
+		var timeInput = document.getElementById("timeRange");
+		var timeOutput = document.getElementById("timeInYears");
 
 
 		L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
@@ -222,6 +216,25 @@
 
 		var input = document.getElementById("searchbox");
 
+		function onSubmitClick() {
+			map.removeLayer(danger1);
+			map.removeLayer(danger2);
+			map.removeLayer(danger3);
+			if(dangerLevel == 1){
+				map.addLayer(danger1);
+			}else if(dangerLevel == 2){
+				map.addLayer(danger2);
+			}else if(dangerLevel == 3){
+				map.addLayer(danger3);
+			}
+		}
+	
+		timeOutput.innerHTML = timeInput.value;
+		timeInput.oninput = function() {
+			timeOutput.innerHTML = this.value;
+			dangerLevel = this.value;
+		}
+		
 		function onLayerClick() {
 			if ($('.card').css('display') == 'none') {
 				$('.card').show();
@@ -230,7 +243,7 @@
 			}
 		}
 		
-		function onSubmitClick(){
+		function onInvestigateClick(){
 			initialize();
 		}
 
@@ -285,12 +298,32 @@
 		function initialize() {
 			if(!init)
 			{
-				$.getJSON("/json/DangerClass3.geojson", function (data) {
-			L.geoJSON(data, {
-				color: 'red',
+			$.getJSON("/json/DangerClass3.geojson", function (data) {
+			danger1 = L.geoJSON(data, {
+				color: '#ff0000',
 				pane: 'top',
-				style: { color: 'red', weight: 4 }
-			}).addTo(map);
+				style: { color: '#ff0000', weight: 4 }
+			});
+			danger1.addTo(map);
+			map.removeLayer(danger1);
+			});
+			$.getJSON("/json/DangerClass2.geojson", function (data) {
+			danger2 = L.geoJSON(data, {
+				color: '#ff0000',
+				pane: 'top',
+				style: { color: '#ff0000', weight: 4 }
+			});
+			danger2.addTo(map);
+			map.removeLayer(danger2);
+			});
+				$.getJSON("/json/DangerClass1.geojson", function (data) {
+			danger3 = L.geoJSON(data, {
+				color: '#ff0000',
+				pane: 'top',
+				style: { color: '#ff0000', weight: 4 }
+			});
+			danger3.addTo(map);
+			map.removeLayer(danger3);
 			});
 		$.getJSON("/json/cadastre_4326.geojson", function (data) {
 			L.geoJSON(data, {
