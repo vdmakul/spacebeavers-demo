@@ -92,26 +92,17 @@
 		</div>
 		<div>
 			<h4 style="padding-left:15px">Past floods</h4>
-			<div class="slidecontainer" style="padding-left: 50px; padding-top: -50px;">
-				<input type="range" min="1" max="10" value="3" id="distanceRange">
-				<p>Distance: <span id="distance"></span></p>
-			</div>
+			<span class="dot" style="margin-left:15px; background-color:'blue'"></span>
+			<p style="display:inline-block; margin:0; padding-right: 20px;">09.05.2018</p>
+			<label class="switch">
+				<input type="checkbox" onchange="hideColor('actualFlood')">
+				<span class="slider round"></span>
+			</label>
 		</div>
 		<button type="button" class="button" onclick="onSubmitClick()" style="margin-left: 27px;">
 			<p style="margin: auto; vertical-align:middle; color: white;">Select</p>
 		</button>
 	</div>
-
-
-	<script>
-		var distanceInput = document.getElementById("distanceRange");
-		var distanceOutput = document.getElementById("distance");
-		distanceOutput.innerHTML = distanceInput.value;
-
-		distanceInput.oninput = function() {
-			distanceOutput.innerHTML = this.value;
-		}
-	</script>
 	
 	<div id="widget">
 
@@ -181,8 +172,8 @@
 		var map = L.map('map', { zoomControl: false }).setView([58.396405 , 26.397722], 7);
 		var init = false;
 		var wmsLayer;
-		var danger1, danger2, danger3, cadastre, rivers, stillwater, roads; //the layers
-		var showCadastre = true, showRivers= true, showStillwater= true, showRoads = true;
+		var danger1, danger2, danger3, cadastre, rivers, stillwater, roads, actualFlood; //the layers
+		var showCadastre = true, showRivers= true, showStillwater= true, showRoads = true, showFlood = false;
 		
 		var dangerLevel=0;
 		var timeInput = document.getElementById("timeRange");
@@ -313,15 +304,25 @@
 			danger2.addTo(map);
 			map.removeLayer(danger2);
 			});
-				$.getJSON("/json/DangerClass1.geojson", function (data) {
-			danger3 = L.geoJSON(data, {
-				color: '#ff0000',
-				pane: 'top',
-				style: { color: '#FFB2B2', weight: 1 }
+			$.getJSON("/json/flood_actual.geojson", function (data) {
+				actualFlood = L.geoJSON(data, {
+					color: 'blue',
+					pane: 'bottom',
+					weight: '1'
+				});
+			actualFlood.addTo(map);
+			map.removeLayer(actualFlood);
 			});
+			$.getJSON("/json/DangerClass1.geojson", function (data) {
+				danger3 = L.geoJSON(data, {
+					color: '#ff0000',
+					pane: 'top',
+					style: { color: '#FFB2B2', weight: 1 }
+				});
 			danger3.addTo(map);
 			map.removeLayer(danger3);
 			});
+			}
 		$.getJSON("/json/cadastre_4326.geojson", function (data) {
 			cadastre = L.geoJSON(data, {
 				color: 'yellow',
@@ -355,8 +356,6 @@
 			});
 			stillwater.addTo(map);
 		});
-
-			}
 		}
 
 		function hideColor(layer) {
@@ -401,7 +400,17 @@
 				{
 					map.removeLayer(stillwater);
 				}	
-			}
+			}else if(layer==="actualFlood") {
+				showFlood = !showFlood; 
+				if(showFlood)
+				{
+					map.addLayer(actualFlood);				
+				} 
+				else
+				{
+					map.removeLayer(actualFlood);
+				}
+			}	
 		}
 		map.createPane('bottom');
 		map.createPane('top');
