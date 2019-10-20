@@ -82,7 +82,7 @@
 	</div>
 
 	<div class=card4 style="display:none; margin-top:210px; height: 365px; margin-left: 5px;">
-		<h3 style="margin-left:80px;">Area Specs</h3>
+		<h3 style="margin-left:80px;">Hazards</h3>
 		<div>
 			<h4 style="padding-left:15px">Danger level</h4>
 			<div class="slidecontainer" style="padding-left: 50px; padding-top: -50px;">
@@ -114,43 +114,54 @@
 	</script>
 	
 	<div id="widget">
-		<p style="
-					color: #ddd;
-    font-size: 24px;
-    margin: 0;
-    text-align: center;
-	padding-top: 20px;
-	font-family: 'Raleway';"> Floody </p>
 
+		<div class="logo-block">
+				<img class="logo-img" src="images/main/logo-02.png">
+				<p class="logo"> Floody </p>
+		</div>
+		<p class="moto"> </p>
+		
+		<p class="card2-p">Search Area</p>
 
-		<p style="
-					color:  #ddd;
-    font-size: 16px;
-    margin: 0;
-	margin-bottom:40px;
-    padding-left: 20px;"> </p>
 		<input type="text" placeholder="Search Area by ID" id="searchbox" class="input-search" />
 		<div class="wrapper">
-			<div class="card2">
-				<button type="button" onclick="onExportClick()" class="btn">
-					<img src="/images/main/export.svg" style="height: 40px;
-						padding-bottom: 20px;
-						margin: auto;
-						display: table;" />
-					<p class="card2-p">Export CSV</p>
+
+
+			<button type="button" class="button disabled" onclick="onInvestigateClick()" style="margin: 0 35px 35px 35px;">
+					<p style="margin: auto; vertical-align:middle; color: white;">Investigate</p>
 				</button>
+
+			<div class="card2">
+					<button type="button" onclick="onLayerClick()" class="btn disabled">
+						<img src="/images/main/layers-24px.svg" style="height: 40px;
+							padding-bottom: 20px;
+							margin: auto;
+							display: table;" />
+						<p class="card2-p">Layers</p>
+					</button>
 			</div>
 
 			<div class="card2">
-				<button type="button" onclick="onLayerClick()" class="btn">
-					<img src="/images/main/layers-24px.svg" style="height: 40px;
+				<button type="button" onclick="onAreaClick()" class="btn disabled">
+					<img src="/images/main/specify.svg" style="height: 40px;
 						padding-bottom: 20px;
 						margin: auto;
 						display: table;" />
-					<p class="card2-p">Layers</p>
+					<p class="card2-p">Hazards</p>
 				</button>
 			</div>
 
+			<!-- <div class="card2">
+					<button type="button" onclick="onExportClick()" class="btn">
+						<img src="/images/main/export.svg" style="height: 40px;
+							padding-bottom: 20px;
+							margin: auto;
+							display: table;" />
+						<p class="card2-p">Export CSV</p>
+					</button>
+			</div> -->
+
+			<!-- 
 			<div class="card2">
 				<button type="button" onclick="onSelectAreaClick()" class="btn">
 					<img src="/images/main/select.svg" style="height: 40px;
@@ -159,22 +170,10 @@
 						display: table;" />
 					<p class="card2-p">Select Area</p>
 				</button>
-			</div>
+			</div> -->
 
-			<div class="card2">
-				<button type="button" onclick="onAreaClick()" class="btn">
-					<img src="/images/main/specify.svg" style="height: 40px;
-						padding-bottom: 20px;
-						margin: auto;
-						display: table;" />
-					<p class="card2-p">Area specs</p>
-				</button>
-			</div>
 		</div>
-		<button type="button" class="button" onclick="onInvestigateClick()" style="margin-left: 35px;">
-			<p style="margin: auto; vertical-align:middle; color: white;">Investigate</p>
-		</button>
-		</button>
+
 	</div>
 
 	<div id='map' style='width: 100%; height:100%'></div>
@@ -271,6 +270,7 @@
 				// Cancel the default action, if needed
 				event.preventDefault();
 				map.setView([58.396405 , 26.397722], 14);
+				$('.disabled').removeClass('disabled');
 			}
 		});
 
