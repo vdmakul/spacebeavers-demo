@@ -30,6 +30,7 @@
 	<script type="text/javascript"
 		src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-ajax/2.1.0/leaflet.ajax.js"></script>
 	<link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
 
 	<link rel="stylesheet" href="style.css">
 
@@ -83,14 +84,14 @@
 	<div class=card4 style="display:none; margin-top:210px; height: 365px; margin-left: 5px;">
 		<h3 style="margin-left:80px;">Area Specs</h3>
 		<div>
-			<h4 style="padding-left:15px">Time in years</h4>
+			<h4 style="padding-left:15px">Danger level</h4>
 			<div class="slidecontainer" style="padding-left: 50px; padding-top: -50px;">
 				<input type="range" min="0" max="3" value="0" id="timeRange">
-				<p>Time: <span id="timeInYears"></span></p>
+				<p>Danger: <span id="timeInYears"></span></p>
 			</div>
 		</div>
 		<div>
-			<h4 style="padding-left:15px">Distance in km</h4>
+			<h4 style="padding-left:15px">Past floods</h4>
 			<div class="slidecontainer" style="padding-left: 50px; padding-top: -50px;">
 				<input type="range" min="1" max="10" value="3" id="distanceRange">
 				<p>Distance: <span id="distance"></span></p>
@@ -123,8 +124,9 @@
 					color: #ddd;
     font-size: 24px;
     margin: 0;
-    padding-left: 60px;
-	padding-top: 20px;"> SpaceBeavers </p>
+    text-align: center;
+	padding-top: 20px;
+	font-family: 'Raleway';"> Floody </p>
 
 
 		<p style="
@@ -226,8 +228,11 @@
 				map.addLayer(danger1);
 			}else if(dangerLevel == 2){
 				map.addLayer(danger2);
+				map.addLayer(danger1);
 			}else if(dangerLevel == 3){
 				map.addLayer(danger3);
+				map.addLayer(danger2);
+				map.addLayer(danger1);
 			}
 		}
 	
@@ -239,6 +244,7 @@
 		
 		function onLayerClick() {
 			if ($('.card').css('display') == 'none') {
+				$('.card4').hide();
 				$('.card').show();
 			} else {
 				$('.card').hide();
@@ -251,6 +257,7 @@
 
 		function onAreaClick() {
 			if ($('.card4').css('display') == 'none') {
+				$('.card').hide();
 				$('.card4').show();
 			} else {
 				$('.card4').hide();
@@ -304,7 +311,7 @@
 			danger1 = L.geoJSON(data, {
 				color: '#ff0000',
 				pane: 'top',
-				style: { color: '#ff0000', weight: 4 }
+				style: { color: '#ff0000', weight: 1 }
 			});
 			danger1.addTo(map);
 			map.removeLayer(danger1);
@@ -313,7 +320,7 @@
 			danger2 = L.geoJSON(data, {
 				color: '#ff0000',
 				pane: 'top',
-				style: { color: '#ff0000', weight: 4 }
+				style: { color: '#FF6262',weight: 1 }
 			});
 			danger2.addTo(map);
 			map.removeLayer(danger2);
@@ -322,7 +329,7 @@
 			danger3 = L.geoJSON(data, {
 				color: '#ff0000',
 				pane: 'top',
-				style: { color: '#ff0000', weight: 4 }
+				style: { color: '#FFB2B2', weight: 1 }
 			});
 			danger3.addTo(map);
 			map.removeLayer(danger3);
@@ -331,15 +338,16 @@
 			cadastre = L.geoJSON(data, {
 				color: 'yellow',
 				pane: 'bottom',
-				weight: '0.2'
+				weight: '0.2',
+				fillOpacity: '0'
 			});
 			cadastre.addTo(map);
 			});
-		$.getJSON("/json/rivers_4326.geojson", function (data) {
+		$.getJSON("/json/only_rivers.geojson", function (data) {
 			rivers = L.geoJSON(data, {
-					color: '#81BEF7',
+					color: '#253EBA',
 				pane: 'bottom',
-				weight: '0.2'
+				weight: '4'
 			});
 			rivers.addTo(map);
 		});
