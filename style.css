@@ -202,7 +202,7 @@ input::placeholder {
     margin-bottom: 0 !important;
 }
 
-button {
+.action-button {
     height: 40px; 
     width: 180px;
     border-radius: 12px; 
@@ -241,14 +241,14 @@ button {
     padding-left: 20px;
 }
 
-.button.disabled {
+.action-button.disabled {
     border: 2px solid grey;
 }
 
 .btn.disabled {
     border: none;
 }
-.button.disabled p, .btn.disabled p {
+.action-button.disabled p, .btn.disabled p {
     color: grey !important;
 }
 .disabled img {

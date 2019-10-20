@@ -40,6 +40,10 @@
 	<!-- 2 -->
 	<script src="https://cdn.knightlab.com/libs/timeline3/latest/js/timeline.js"></script>
 
+	<!-- https://www.w3schools.com/w3css/w3css_slideshow.asp -->
+	<script src="js/w3css.js"></script>
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<link rel="stylesheet" href="css/w3css.css">
 
 </head>
 
@@ -81,7 +85,7 @@
 		</div>
 	</div>
 
-	<div class=card4 style="display:none; margin-top:210px; height: 365px; margin-left: 5px;">
+	<div class=card4 style="display:none; margin-top:210px; height: 400px; margin-left: 5px;">
 		<h3 style="margin-left:80px;">Hazards</h3>
 		<div>
 			<h4 style="padding-left:15px">Danger level</h4>
@@ -90,8 +94,14 @@
 				<p>Danger: <span id="timeInYears"></span></p>
 			</div>
 		</div>
+
+		<button type="button" class="action-button" onclick="onSubmitClick()" style="margin-left: 27px;">
+				<p style="margin: auto; vertical-align:middle; color: white;">Update</p>
+			</button>
+
+
 		<div>
-			<h4 style="padding-left:15px">Past floods</h4>
+			<h4 style="padding-left:15px; padding-top: 30px;">Past floods</h4>
 			<span class="dot" style="margin-left:15px; background-color:'blue'"></span>
 			<p style="display:inline-block; margin:0; padding-right: 20px;">09.05.2018</p>
 			<label class="switch">
@@ -99,9 +109,28 @@
 				<span class="slider round"></span>
 			</label>
 		</div>
-		<button type="button" class="button" onclick="onSubmitClick()" style="margin-left: 27px;">
-			<p style="margin: auto; vertical-align:middle; color: white;">Select</p>
+
+		<button type="button" class="action-button" id="showFloodsBtn" style="margin-left: 27px; margin-top: 20px;">
+				<p style="margin: auto; vertical-align:middle; color: white;">SAT images</p>
 		</button>
+
+		<div id="myModal" class="modal">
+			<!-- Modal content -->
+			<div class="modal-content">
+				<span class="close">&times;</span>
+					
+				<h3 class="w3-center" style="color: black;">Flood images 2018-05-07 - 2018-05-25</h2>
+	
+				<div class="w3-content w3-display-container">
+					<img class="mySlides" src="images/flood/2018-05-07_RGB.jpg" style="width:100%">
+					<img class="mySlides" src="images/flood/2018-05-25_RGB.jpg" style="width:100%">
+				
+					<button class="w3-button w3-black w3-display-left" onclick="plusDivs(-1)">&#10094;</button>
+					<button class="w3-button w3-black w3-display-right" onclick="plusDivs(1)">&#10095;</button>
+				</div>
+			</div>
+		</div>
+
 	</div>
 	
 	<div id="widget">
@@ -118,7 +147,7 @@
 		<div class="wrapper">
 
 
-			<button type="button" class="button disabled" onclick="onInvestigateClick()" style="margin: 0 35px 35px 35px;">
+			<button type="button" class="action-button disabled" onclick="onInvestigateClick()" style="margin: 0 35px 35px 35px;">
 					<p style="margin: auto; vertical-align:middle; color: white;">Investigate</p>
 				</button>
 
@@ -237,6 +266,8 @@
 			if ($('.card4').css('display') == 'none') {
 				$('.card').hide();
 				$('.card4').show();
+
+				initFloodPopup();
 			} else {
 				$('.card4').hide();
 			}
