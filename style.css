@@ -201,3 +201,13 @@ input::placeholder {
 .leaflet-bottom.leaflet-right {
     margin-bottom: 0 !important;
 }
+
+button {
+    height: 40px; 
+    width: 180px;
+    border-radius: 12px; 
+    border: 2px solid white; 
+    background: black; 
+    text-align: center;
+    cursor: pointer;
+}
