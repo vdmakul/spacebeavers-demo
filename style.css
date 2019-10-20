@@ -14,7 +14,7 @@ body {
 #widget {
     width: 250px;
     height: 100%;
-    z-index: 1000;
+    z-index: 999;
     top: 0;
     left: 0;
     background: rgba(0, 0, 0, 0.7);

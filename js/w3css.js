@@ -1,6 +1,8 @@
 var slideIndex = 1;
 var inited = false;
 
+var labels = ['Flood image 2018-05-07', 'Flood image 2018-05-25'];
+
 function plusDivs(n) {
   showDivs(slideIndex += n);
 }
@@ -14,6 +16,8 @@ function showDivs(n) {
     x[i].style.display = "none";
   }
   x[slideIndex - 1].style.display = "block";
+  $('#modal-caption').text(labels[slideIndex-1]);
+  
 }
 
 function initFloodPopup() {
