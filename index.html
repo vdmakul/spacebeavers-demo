@@ -50,7 +50,7 @@
 			<span class="dot" style="margin-left:15px; background-color: yellow"></span>
 			<p style="display:inline-block; margin:0;padding-right: 20px;">Cadastre</p>
 			<label class="switch">
-				<input checked type="checkbox" onchange="hideColor('yellow')">
+				<input checked type="checkbox" onchange="hideColor('cadastre')">
 				<span class="slider round"></span>
 			</label>
 		</div>
@@ -58,7 +58,7 @@
 			<span class="dot" style="margin-left:15px; background-color:blue"></span>
 			<p style="display:inline-block; margin:0; padding-right: 20px;">Still water</p>
 			<label class="switch">
-				<input checked type="checkbox" onchange="hideColor('blue')">
+				<input checked type="checkbox" onchange="hideColor('stillwater')">
 				<span class="slider round"></span>
 			</label>
 		</div>
@@ -66,7 +66,7 @@
 			<span class="dot" style="margin-left:15px; background-color:#81BEF7"></span>
 			<p style="display:inline-block; margin:0; padding-right: 20px;">Rivers</p>
 			<label class="switch">
-				<input checked type="checkbox" onchange="hideColor('#81BEF7')">
+				<input checked type="checkbox" onchange="hideColor('rivers')">
 				<span class="slider round"></span>
 			</label>
 		</div>
@@ -74,7 +74,7 @@
 			<span class="dot" style="margin-left:15px; background-color:silver"></span>
 			<p style="display:inline-block; margin:0; padding-right: 20px;">Roads</p>
 			<label class="switch">
-				<input checked type="checkbox" onchange="hideColor('silver')">
+				<input checked type="checkbox" onchange="hideColor('roads')">
 				<span class="slider round"></span>
 			</label>
 		</div>
@@ -192,7 +192,9 @@
 		var map = L.map('map', { zoomControl: false }).setView([58.396405 , 26.397722], 7);
 		var init = false;
 		var wmsLayer;
-		var danger1, danger2, danger3;
+		var danger1, danger2, danger3, cadastre, rivers, stillwater, roads; //the layers
+		var showCadastre = true, showRivers= true, showStillwater= true, showRoads = true;
+		
 		var dangerLevel=0;
 		var timeInput = document.getElementById("timeRange");
 		var timeOutput = document.getElementById("timeInYears");
@@ -326,51 +328,83 @@
 			map.removeLayer(danger3);
 			});
 		$.getJSON("/json/cadastre_4326.geojson", function (data) {
-			L.geoJSON(data, {
+			cadastre = L.geoJSON(data, {
 				color: 'yellow',
 				pane: 'bottom',
 				weight: '0.2'
-			}).addTo(map);
+			});
+			cadastre.addTo(map);
 			});
 		$.getJSON("/json/rivers_4326.geojson", function (data) {
-			L.geoJSON(data, {
+			rivers = L.geoJSON(data, {
 					color: '#81BEF7',
 				pane: 'bottom',
 				weight: '0.2'
-			}).addTo(map);
+			});
+			rivers.addTo(map);
 		});
 		$.getJSON("/json/roads_4326.geojson", function (data) {
-			L.geoJSON(data, {
+			roads = L.geoJSON(data, {
 				color: 'silver',
 				pane: 'bottom',
 				weight: '0.2'
-			}).addTo(map);
+			});
+			roads.addTo(map);
 		});
 		$.getJSON("/json/stillwater_4326.geojson", function (data) {
-			L.geoJSON(data, {
+			stillwater = L.geoJSON(data, {
 				color: 'blue',
 				pane: 'bottom',
 				weight: '0.2'
-			}).addTo(map);
+			});
+			stillwater.addTo(map);
 		});
 
 			}
 		}
 
-		function hideColor(color) {
-			let elements = document.getElementsByClassName("leaflet-interactive");
-			for (let element of elements) {
-				stroke = element.getAttribute('stroke')
-				if (stroke === color) {
-					if (element.style.display === "") {
-						element.style.display = "none";
-
-					} else {
-						element.style.display = ""
-					}
-
-
-				}
+		function hideColor(layer) {
+			
+			if(layer==="cadastre") {
+				showCadastre = !showCadastre; 
+				if(showCadastre)
+				{
+					map.addLayer(cadastre);				
+				} 
+				else
+				{
+					map.removeLayer(cadastre);
+				}	
+			} else if(layer==="roads") {
+				showRoads = !showRoads; 
+				if(showRoads)
+				{
+					map.addLayer(roads);				
+				} 
+				else
+				{
+					map.removeLayer(roads);
+				}	
+			}else if(layer==="rivers") {
+				showRivers = !showRivers; 
+				if(showRivers)
+				{
+					map.addLayer(rivers);				
+				} 
+				else
+				{
+					map.removeLayer(rivers);
+				}	
+			}else if(layer==="stillwater") {
+				showStillwater = !showStillwater; 
+				if(showStillwater)
+				{
+					map.addLayer(stillwater);				
+				} 
+				else
+				{
+					map.removeLayer(stillwater);
+				}	
 			}
 		}
 		map.createPane('bottom');
